@@ -4,6 +4,7 @@
 
 namespace kiko
 {
+
 	class Renderer
 	{
 	public:
@@ -27,6 +28,9 @@ namespace kiko
 		int GetHeight() const { return m_height; }
 
 		friend class Text;
+		friend class Texture;
+
+		void DrawTexture(class Texture* texture, float x, float y, float angle = 0.0f);
 
 	private:
 		int m_width = 0;

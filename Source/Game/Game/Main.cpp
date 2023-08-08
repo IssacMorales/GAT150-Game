@@ -5,15 +5,20 @@
 #include "Audio/AudioSystem.h"
 #include "Framework/Scene.h"
 #include "Framework/Emitter.h"
+#include "Framework/Source/Resource/ResourceManager.h"
 #include "Renderer/Text.h"
 #include "Renderer/ParticleSystem.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "SpaceGame.h"
+#include "Renderer/Renderer.h"
+#include "Renderer/Texture.h"
 
 #include <iostream>
 #include <vector>
 #include <thread>
+#include <array>
+#include <Framework/Source/Resource/ResourceManager.cpp>
 
 using namespace std;
 
@@ -42,17 +47,63 @@ public:
 	kiko::vec2 m_vel;
 };
 
+template<typename T>
+void print(const std::string& s, const T& container) {
+	std::cout << s << std::endl; for(auto element : container)
+	{
+		std::cout << element << "";
+	}
+	std::cout << std::endl;
+}
+
+void print_arg(int count, ...)
+{
+	va_list args;
+
+	va_start(args, count);
+	for (int i = 0; i < count; ++i)
+	{
+		std::cout << va_arg(args, const char*) << std::endl;
+	}
+	va_end(args);
+}
+
 
 
 int main(int argc, char* argv[])
 {
+	/*int n[4] = { 1, 2, 3, 4 };
+	print("array class: ", n);
+	cout << n << endl;
+	cout << *(n + 3) << endl;
 
+	std::array<int, 4> na = { 1, 2, 3, 4 };
+	print("array class: ", na);
+	cout << na.front() << endl;
+	cout << na.back() << endl;
+	cout << na.max_size() << endl;
 
+	std::vector<int> nv = { 1, 2, 3, 4 };
+	print("vector class: ", nv);
+	nv.insert(nv.begin(), 0);
+	nv.push_back(5);
+	nv.pop_back();
+	auto iter = nv.erase(nv.begin(), nv.end());
+	print("vector: ", nv);
+	
 
-#ifdef _DEBUG
-	cout << "debug mode\n";
-#endif // _DEBUG
+	std::list<int> nl = { 1, 2, 3, 4 };
+	print("list class: ", nl);
+	nl.push_front(0);
+	print("list class: ", nl);
 
+	std::map<std::string, int> ages;
+	ages["Charles"] = 17;
+	ages["Xane"] = 18;
+	ages["Jacob"] = 19;
+
+	cout << ages["Charles"] << endl;
+	cout << ages["Xane"] << endl;*/
 
 
 	kiko::MemoryTracker::Initialize();
@@ -70,6 +121,9 @@ int main(int argc, char* argv[])
 	unique_ptr<SpaceGame> game = make_unique<SpaceGame>();
 	game->Initialize();
 
+	//create texture
+	kiko::res_t<kiko::Texture> texture = kiko::g_resourceM.Get<kiko::Texture>("Ship_1_C_Medium.png", kiko::g_renderer);
+
 	vector<Star> stars;
 	for (int i = 0; i < 1000; i++)
 	{
@@ -81,6 +135,9 @@ int main(int argc, char* argv[])
 
 	// main game loop
 	bool quit = false;
+	
+	//texture->Load("Ship_1_C_Medium.png", kiko::g_renderer);
+
 	while (!quit)
 	{
 		// update engine
@@ -104,7 +161,7 @@ int main(int argc, char* argv[])
 			kiko::g_renderer.SetColor(kiko::random(256), kiko::random(256), kiko::random(256), 255);
 			star.Draw(kiko::g_renderer);
 		}
-
+		kiko::g_renderer.DrawTexture(texture.get(), 200.0f, 200.0f, 0.0f);
 		game->Draw(kiko::g_renderer);
 		kiko::g_particleSystem.Draw(kiko::g_renderer);
 		

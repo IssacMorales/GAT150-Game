@@ -1,8 +1,11 @@
 #include "FileIO.h"
+#include "Logger.h"
 #include <fstream>
+#include <iostream>
 
 namespace kiko
 {
+
 	std::string getFilePath()
 	{
 		return std::filesystem::current_path().string();
@@ -14,6 +17,11 @@ namespace kiko
 		std::filesystem::current_path(path, ec);
 
 		return ec.value() == 0;
+	}
+
+	std::string getFileName(const std::filesystem::path& path)
+	{
+		return path.filename().string();
 	}
 
 	bool fileExists(const std::filesystem::path& path)
@@ -31,7 +39,11 @@ namespace kiko
 
 	bool readFile(const std::filesystem::path& path, std::string& buffer)
 	{
-		if (!fileExists(path)) return false;
+		if (!fileExists(path)) {
+			WARNING_LOG("File Not Loaded: " << path.string());
+			//std::cout << "file not found: " << path << std::endl;
+			return false;
+		}
 
 		size_t size;
 		if (!getFileSize(path, size)) return false;
