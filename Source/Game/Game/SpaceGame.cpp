@@ -10,7 +10,6 @@
 #include "Input/InputSystem.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/Text.h"
-#include "Renderer/ModelManager.h"
 #include <Framework/Components/EnginePhysicsComponent.h>
 
 bool SpaceGame::Initialize()
@@ -69,7 +68,7 @@ void SpaceGame::Update(float dt)
 
 		//create components
 		std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
-		component->m_texture = kiko::g_resourceM.Get<kiko::Texture>("Ship_1_C_Medium.png", kiko::g_renderer);
+		component->m_texture = kiko::g_resourceM.Get<kiko::Texture>("Ship_1_C_Small.png", kiko::g_renderer);
 		player->AddComponent(std::move(component));
 
 		auto physicsComponent = std::make_unique<kiko::EnginePhysicsComponent>();
@@ -91,7 +90,7 @@ void SpaceGame::Update(float dt)
 			enemy->m_game = this;
 
 			std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
-			component->m_texture = kiko::g_resourceM.Get<kiko::Texture>("Enemy_2_B_Medium.png", kiko::g_renderer);
+			component->m_texture = kiko::g_resourceM.Get<kiko::Texture>("Enemy_2_B_Small.png", kiko::g_renderer);
 			enemy->AddComponent(std::move(component));
 			m_scene->Add(std::move(enemy));
 		}

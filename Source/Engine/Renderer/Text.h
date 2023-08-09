@@ -1,12 +1,15 @@
 #pragma once
-#include "Renderer.h"
 #include "Font.h"
 #include "Core/Color.h"
 #include <string>
 #include <memory>
 
+struct SDL_Texture;
+
 namespace kiko
 {
+	class Renderer;
+
 	class Text
 	{
 	public:

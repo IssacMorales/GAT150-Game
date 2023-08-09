@@ -5,6 +5,8 @@
 
 namespace kiko
 {
+	class Renderer;
+
 	class Model
 	{
 	public:

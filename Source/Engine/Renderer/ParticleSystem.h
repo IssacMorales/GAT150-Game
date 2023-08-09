@@ -1,6 +1,5 @@
 #pragma once
 #include "Particle.h"
-#include "Renderer.h"
 #include <vector>
 
 namespace kiko
@@ -15,7 +14,7 @@ namespace kiko
 		}
 
 		void Update(float dt);
-		void Draw(Renderer& renderer);
+		void Draw(class Renderer& renderer);
 
 		Particle* GetFreeParticle();
 

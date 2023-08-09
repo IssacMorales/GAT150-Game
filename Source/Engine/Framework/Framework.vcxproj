@@ -141,6 +141,7 @@
     <ClInclude Include="Components\ModelRenderComponent.h" />
     <ClInclude Include="Components\PhysicsComponent.h" />
     <ClInclude Include="Emitter.h" />
+    <ClInclude Include="Framework.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="Scene.h" />

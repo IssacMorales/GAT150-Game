@@ -1,6 +1,5 @@
 #include "Core/Core.h"
 #include "Renderer/Renderer.h"
-#include "Renderer/ModelManager.h"
 #include "Input/InputSystem.h"
 #include "Audio/AudioSystem.h"
 #include "Framework/Scene.h"
@@ -68,10 +67,9 @@ void print_arg(int count, ...)
 	va_end(args);
 }
 
-
-
 int main(int argc, char* argv[])
 {
+	
 	/*int n[4] = { 1, 2, 3, 4 };
 	print("array class: ", n);
 	cout << n << endl;

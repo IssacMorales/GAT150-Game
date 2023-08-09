@@ -1,4 +1,5 @@
 #include "Particle.h"
+#include "Renderer.h"
 
 void kiko::Particle::Update(float dt)
 {
