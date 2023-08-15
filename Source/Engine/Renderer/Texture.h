@@ -1,6 +1,6 @@
 #pragma once
 #include "Framework/Source/Resource/Resource.h"
-#include "Core/Vector2.h"
+#include "Core/Math/Vector2.h"
 
 struct SDL_Texture;
 namespace kiko

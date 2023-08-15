@@ -1,4 +1,5 @@
 #pragma once
+#include "Framework/Object.h"
 
 namespace kiko
 {
@@ -9,6 +10,7 @@ namespace kiko
 
 		friend class Actor;
 
+		Actor* GetOwner() { return m_owner; }
 	protected:
 		class Actor* m_owner = nullptr;
 

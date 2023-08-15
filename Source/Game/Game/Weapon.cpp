@@ -1,5 +1,23 @@
 #include "Weapon.h"
 #include "Renderer/Renderer.h"
+#include <Framework/Framework.h>
+
+bool Weapon::Initialize()
+{
+	Actor::Initialize();
+
+	auto collisionComponent = GetComponent<kiko::CollisionComponent>();
+	if (collisionComponent)
+	{
+		auto renderComponent = GetComponent<kiko::RenderComponent>();
+		if (renderComponent)
+		{
+			float scale = m_transform.scale;
+			collisionComponent->m_radius = renderComponent->GetRadius() * scale;
+		}
+	}
+}
+
 
 void Weapon::Update(float dt)
 {

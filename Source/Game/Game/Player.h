@@ -10,10 +10,13 @@ public:
 		m_turnRate{ turnRate }
 	{}
 
+	bool Initialize() override;
 	void Update(float dt) override;
 	void OnCollision(Actor* other) override;
 
 private:
 	float m_speed = 0;
 	float m_turnRate = 0;
+
+	kiko::PhysicsComponent* m_physicsComponent = nullptr;
 };

@@ -5,9 +5,31 @@
 #include "Input/InputSystem.h"
 #include "Renderer/Renderer.h"
 #include "Framework/Components/SpriteComponent.h"
+#include "Framework/Components/CircleCollisionComponent.h"
 #include "Renderer/Texture.h"
 #include <Framework/Source/Resource/ResourceManager.h>
 #include <Framework/Components/PhysicsComponent.h>
+
+bool Player::Initialize()
+{
+	Actor::Initialize();
+
+	//cache off
+	m_physicsComponent = GetComponent<kiko::PhysicsComponent>();
+	auto collisionComponent = GetComponent<kiko::CollisionComponent>();
+	if (collisionComponent)
+	{
+		auto renderComponent = GetComponent<kiko::RenderComponent>();
+		if(renderComponent)
+		{
+			float scale = m_transform.scale;
+			collisionComponent->m_radius = GetComponent<kiko::RenderComponent>()->GetRadius() * scale;
+		}
+		
+	}
+
+	return false;
+}
 
 void Player::Update(float dt)
 {
@@ -19,13 +41,13 @@ void Player::Update(float dt)
 	if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_D)) rotate = 1;
 	m_transform.rotation += rotate * m_turnRate * kiko::g_time.GetDeltaTime();
 
+
 	float thrust = 0;
 	if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_W)) thrust = 1;
 
 	kiko::vec2 forward = kiko::vec2{ 0, -1 }.Rotate(m_transform.rotation);
 
-	auto physicsComponent = GetComponent<kiko::PhysicsComponent>();
-	physicsComponent->ApplyForce(forward * m_speed * thrust);
+	m_physicsComponent->ApplyForce(forward * m_speed * thrust);
 
 	//m_transform.position += forward * m_speed * thrust * kiko::g_time.GetDeltaTime();
 	m_transform.position.x = kiko::Wrap(m_transform.position.x, (float)kiko::g_renderer.GetWidth());
@@ -44,11 +66,26 @@ void Player::Update(float dt)
 		component->m_texture = kiko::g_resourceM.Get<kiko::Texture>("Rocket.png", kiko::g_renderer);
 		weapon->AddComponent(std::move(component));
 
+		auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+		collisionComponent->m_radius = 30.0f;
+		weapon->AddComponent(std::move(collisionComponent));
+
+		weapon->Initialize();
 		m_scene->Add(std::move(weapon));
 
 		kiko::Transform transform2{ m_transform.position, m_transform.rotation - kiko::DegreesToRadians(10.0f), 1 };
 		weapon = std::make_unique<Weapon>(400.0f, transform2);
 		weapon->m_tag = "Player";
+
+		component = std::make_unique<kiko::SpriteComponent>();
+		component->m_texture = kiko::g_resourceM.Get<kiko::Texture>("Rocket.png", kiko::g_renderer);
+		weapon->AddComponent(std::move(component));
+
+		auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+		collisionComponent->m_radius = 30.0f;
+		weapon->AddComponent(std::move(collisionComponent));
+
+		weapon->Initialize();
 		m_scene->Add(std::move(weapon));
 	}
 

@@ -11,6 +11,9 @@
 #include "Renderer/Renderer.h"
 #include "Renderer/Text.h"
 #include <Framework/Components/EnginePhysicsComponent.h>
+#include <Framework/Components/ModelRenderComponent.h>
+#include <Framework/Components/CircleCollisionComponent.h>
+#include <Instance.h>
 
 bool SpaceGame::Initialize()
 {
@@ -67,15 +70,20 @@ void SpaceGame::Update(float dt)
 		player->m_game = this;
 
 		//create components
-		std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
-		component->m_texture = kiko::g_resourceM.Get<kiko::Texture>("Ship_1_C_Small.png", kiko::g_renderer);
+		std::unique_ptr<kiko::SpriteComponent> component = std::Factory::Instance().Create<kiko::SpriteComponent>("SpriteComponent"); 
 		player->AddComponent(std::move(component));
 
 		auto physicsComponent = std::make_unique<kiko::EnginePhysicsComponent>();
 		physicsComponent->m_damping = 0.9f;
 		player->AddComponent(std::move(physicsComponent));
 
+		auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+		collisionComponent->m_radius = 30.0f;
+		player->AddComponent(std::move(collisionComponent));
+
+		player->Initialize();
 		m_scene->Add(std::move(player));
+		player->Initialize();
 	}
 	m_state = eState::Game;
 	break;
@@ -92,6 +100,13 @@ void SpaceGame::Update(float dt)
 			std::unique_ptr<kiko::SpriteComponent> component = std::make_unique<kiko::SpriteComponent>();
 			component->m_texture = kiko::g_resourceM.Get<kiko::Texture>("Enemy_2_B_Small.png", kiko::g_renderer);
 			enemy->AddComponent(std::move(component));
+			m_scene->Add(std::move(enemy));
+
+			auto collisionComponent = std::make_unique<kiko::CircleCollisionComponent>();
+			collisionComponent->m_radius = 30.0f;
+			enemy->AddComponent(std::move(collisionComponent));
+
+			enemy->Initialize();
 			m_scene->Add(std::move(enemy));
 		}
 		break;

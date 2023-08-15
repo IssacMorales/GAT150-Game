@@ -39,6 +39,7 @@ namespace kiko
 
 		void DrawTexture(class Texture* texture, float x, float y, float angle = 0.0f);
 
+
 	private:
 		int m_width = 0;
 		int m_height = 0;

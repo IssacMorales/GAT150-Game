@@ -1,4 +1,5 @@
 #pragma once
+#include "Object.h"
 #include "Core/Core.h"
 #include "Renderer/Model.h"
 #include "Components/Component.h"
@@ -6,13 +7,17 @@
 
 namespace kiko
 {
-	class Actor
+	class Actor : public Object
 	{
 	public:
+		CLASS_DELCARATION(Actor);
 		Actor() = default;
 		Actor(const kiko::Transform& transform) :
 			m_transform{ transform }
 		{}
+
+		virtual bool Initialize() override;
+		virtual bool OnDestroy() override;
 
 		virtual void Update(float dt);
 		virtual void Draw(kiko::Renderer& renderer);
