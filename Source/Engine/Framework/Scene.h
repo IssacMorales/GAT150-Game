@@ -17,6 +17,10 @@ namespace kiko
 		void Add(std::unique_ptr<Actor> actor);
 		void RemoveAll();
 
+		bool Load(const std::string& filename);
+		void Read(const json_t& value);
+		bool Initialize();
+
 		template<typename T>
 		T* GetActor();
 

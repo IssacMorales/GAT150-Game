@@ -1,9 +1,9 @@
 #pragma once
-#include "Framework/Components/Component.h"
+#include "Framework/Actor.h"
 
 namespace kiko
 {
-	class WeaponComponent : public kiko::Component
+	class Weapon : public Actor
 	{
 	public:
 		/*

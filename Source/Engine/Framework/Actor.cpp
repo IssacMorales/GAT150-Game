@@ -62,7 +62,7 @@ namespace kiko
 		READ_DATA(value, tag);
 		READ_DATA(value, lifespan);
 
-		if(HAS_DATA(value, transform)) transform.Read(value);
+		if(HAS_DATA(value, transform)) transform.Read(GET_DATA(value, transform));
 		if(HAS_DATA(value, components) && GET_DATA(value, components).IsArray())
 		{
 			for (auto& componentValue : GET_DATA(value, components).GetArray())
@@ -72,6 +72,7 @@ namespace kiko
 
 				auto component = CREATE_CLASS_BASE(Component, type);
 				component->Read(componentValue);
+
 				AddComponent(std::move(component));
 
 			}

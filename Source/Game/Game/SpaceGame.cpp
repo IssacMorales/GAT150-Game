@@ -28,6 +28,8 @@ bool SpaceGame::Initialize()
 
 	// create scene
 	m_scene = std::make_unique<kiko::Scene>();
+	m_scene->Load("scene.json");
+	m_scene->Initialize();
 
 	return true;
 }

@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "WeaponComponent.h"
+#include "Weapon.h"
 #include "SpaceGame.h"
 #include "Framework/Framework.h"
 #include "Input/InputSystem.h"
@@ -52,7 +52,7 @@ void Player::Update(float dt)
 	transform.position.y = kiko::Wrap(transform.position.y, (float)kiko::g_renderer.GetHeight());
 
 	// fire weapon
-	if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_SPACE) &&
+	/*if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_SPACE) &&
 		!kiko::g_inputSystem.GetPreviousKeyDown(SDL_SCANCODE_SPACE))
 	{
 		// create weapon
@@ -85,7 +85,7 @@ void Player::Update(float dt)
 
 		weapon->Initialize();
 		m_scene->Add(std::move(weapon));
-	}
+	} */
 
 	if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_T)) kiko::g_time.SetTimeScale(0.5f);
 	else kiko::g_time.SetTimeScale(1.0f);

@@ -1,6 +1,7 @@
 #pragma once
 #include "RenderComponent.h"
 #include <Renderer/Model.h>
+#include "Framework/Factory.h"
 #include "Framework/Source/Resource/ResourceManager.h"
 
 namespace kiko
@@ -20,5 +21,6 @@ namespace kiko
 
 	public:
 		res_t<Model> m_model;
+		std::string modelName;
 	};
 }
