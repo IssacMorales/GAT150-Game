@@ -38,6 +38,7 @@ namespace kiko
 		friend class Texture;
 
 		void DrawTexture(class Texture* texture, float x, float y, float angle = 0.0f);
+		void DrawTexture(class Texture* texture, const Transform& transform);
 
 
 	private:

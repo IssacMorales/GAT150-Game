@@ -10,14 +10,15 @@ namespace kiko
 	class Actor : public Object
 	{
 	public:
-		CLASS_DELCARATION(Actor);
+		CLASS_DELCARATION(Actor)
+
 		Actor() = default;
 		Actor(const kiko::Transform& transform) :
-			m_transform{ transform }
+			transform{ transform }
 		{}
 
 		virtual bool Initialize() override;
-		virtual bool OnDestroy() override;
+		virtual void OnDestroy() override;
 
 		virtual void Update(float dt);
 		virtual void Draw(kiko::Renderer& renderer);
@@ -34,18 +35,17 @@ namespace kiko
 
 		class Game* m_game = nullptr;
 
-		Transform m_transform;
-		std::string m_tag;
-		float m_lifespan = -1.0f;
+	public:
+		Transform transform;
+		std::string tag;
+		float lifespan = -1.0f;
+		bool destroyed = false;
 
 	protected:
 		std::vector<std::unique_ptr<Component>>m_components;
-
-		bool m_destroyed = false;
-		
 	};
-	template<typename T>
 
+	template<typename T>
 	inline T* Actor::GetComponent()
 	{
 		for (auto& component : m_components)

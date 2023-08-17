@@ -7,7 +7,7 @@
 
 #include "Components/Component.h"
 #include "Components/RenderComponent.h"
-#include "Components/SpriteComponent.h"
+#include "Components/SpriteRenderComponent.h"
 #include "Components/PhysicsComponent.h"
 #include "Components/ModelRenderComponent.h"
 #include "Components/EnginePhysicsComponent.h"
@@ -17,3 +17,5 @@
 
 #include "Components/CollisionComponent.h"
 #include "Components/CircleCollisionComponent.h"
+
+#include "Factory.h"

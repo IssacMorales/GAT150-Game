@@ -1,5 +1,6 @@
 #pragma once
 #include "Framework/Actor.h"
+#include "Framework/Components/PhysicsComponent.h"
 
 class Player : public kiko::Actor
 {

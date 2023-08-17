@@ -17,7 +17,8 @@
 #include <vector>
 #include <thread>
 #include <array>
-#include <Framework/Source/Resource/ResourceManager.cpp>
+#include <Framework/Components/SpriteRenderComponent.h>
+#include <Framework/Components/CircleCollisionComponent.h>
 
 using namespace std;
 
@@ -46,6 +47,8 @@ public:
 	kiko::vec2 m_vel;
 };
 
+
+
 template<typename T>
 void print(const std::string& s, const T& container) {
 	std::cout << s << std::endl; for(auto element : container)
@@ -69,44 +72,42 @@ void print_arg(int count, ...)
 
 int main(int argc, char* argv[])
 {
-	
-	/*int n[4] = { 1, 2, 3, 4 };
-	print("array class: ", n);
-	cout << n << endl;
-	cout << *(n + 3) << endl;
+	kiko::Factory::Instance().Register<kiko::SpriteRenderComponent>("SpriteRenderComponent");
+	kiko::Factory::Instance().Register<kiko::CircleCollisionComponent>("CircleCollisionComponent");
 
-	std::array<int, 4> na = { 1, 2, 3, 4 };
-	print("array class: ", na);
-	cout << na.front() << endl;
-	cout << na.back() << endl;
-	cout << na.max_size() << endl;
-
-	std::vector<int> nv = { 1, 2, 3, 4 };
-	print("vector class: ", nv);
-	nv.insert(nv.begin(), 0);
-	nv.push_back(5);
-	nv.pop_back();
-	auto iter = nv.erase(nv.begin(), nv.end());
-	print("vector: ", nv);
-	
-
-	std::list<int> nl = { 1, 2, 3, 4 };
-	print("list class: ", nl);
-	nl.push_front(0);
-	print("list class: ", nl);
-
-	std::map<std::string, int> ages;
-	ages["Charles"] = 17;
-	ages["Xane"] = 18;
-	ages["Jacob"] = 19;
-
-	cout << ages["Charles"] << endl;
-	cout << ages["Xane"] << endl;*/
-
+	INFO_LOG("Initialize Engine...")
 
 	kiko::MemoryTracker::Initialize();
 	kiko::seedRandom((unsigned int)time(nullptr));
 	kiko::setFilePath("assets");
+
+	rapidjson::Document document;
+	kiko::Json::Load("json.txt", document);
+
+
+	int i1;
+	kiko::Json::Read(document, "integer1", i1);
+	std::cout << i1 << std::endl;
+
+	int i2;
+	kiko::Json::Read(document, "integer2", i2);
+	std::cout << i2 << std::endl;
+
+	std::string str;
+	kiko::Json::Read(document, "string", str);
+	std::cout << str << endl;
+
+	bool b;
+	kiko::Json::Read(document, "boolean", b);
+	std::cout << b << endl;
+
+	float f;
+	kiko::Json::Read(document, "float", f);
+	std::cout << f << endl;
+
+	kiko::vec2 v2;
+	kiko::Json::Read(document, "vector2", v2);
+	std::cout << v2 << endl;
 
 	// initialize engine
 	kiko::g_renderer.Initialize();
@@ -120,7 +121,7 @@ int main(int argc, char* argv[])
 	game->Initialize();
 
 	//create texture
-	kiko::res_t<kiko::Texture> texture = kiko::g_resourceM.Get<kiko::Texture>("Ship_1_C_Medium.png", kiko::g_renderer);
+	kiko::res_t<kiko::Texture> texture = GET_RESOURCE(kiko::Texture, "Ship_1_C_Small.png", kiko::g_renderer);
 
 	vector<Star> stars;
 	for (int i = 0; i < 1000; i++)

@@ -3,28 +3,23 @@
 #include <memory>
 #include <map>
 #include <string>
+
 namespace kiko
 {
-    class CreatorBase
-    {
-    public:
-        virtual ~CreatorBase() = default;
-
-        virtual std::unique_ptr<class Object>Create() = 0;
-
-        static T& Instance() 
-        {
-
-        }
-    }
-
     template <typename T>
-    class Creator : public CreatorBase
+    class Singleton
     {
     public:
-        std::unique_ptr<class Object> Create() override
+        Singleton(const Singleton& other) {}
+        Singleton& operator = (const Singleton& other) {}
+
+        static T& Instance()
         {
-            return std::make_unique<T>();
+            static T instance;
+            return instance;
         }
+
+    protected:
+        Singleton() = default;
     };
 }

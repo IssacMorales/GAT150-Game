@@ -1,11 +1,11 @@
 #pragma once
 #include "Factory.h"
-//#include "Core/Json.h"
+#include "Core/Json.h"
 #include <string>
 
 #define CLASS_DELCARATION(classname) \
 	virtual const char* GetClassName() { return #classname; } \
-	/*bool Read(const rapidjson::Value& value) \*/
+	void Read(const json_t& value); \
 	class Register \
 	{ \
 		public: \
@@ -24,16 +24,16 @@ namespace kiko
 	{
 	public:
 		Object() = default;
-		Object(const std::string& name) : m_name{ name } {}
+		Object(const std::string& name) : name{ name } {}
 		virtual ~Object() { OnDestroy(); }
 
-		CLASS_DELCARATION(object);
+		CLASS_DELCARATION(Object)
 
 		virtual bool Initialize() { return true; }
-		virtual bool OnDestroy() {}
+		virtual void OnDestroy() {}
 
 	protected:
-		std::string m_name;
+		std::string name;
 
 	};
 }

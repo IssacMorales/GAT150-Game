@@ -5,24 +5,21 @@
 
 namespace kiko
 {
+
+	//errorHere
 	class SpriteRenderComponent : public RenderComponent
 	{
 	public:
+		CLASS_DELCARATION(SpriteRenderComponent)
+
+		bool Initialize() override;
 		void Update(float dt) override;
 		void Draw(class Renderer& renderer) override;
 
-		virtual float GetRadius() { return m_texture->GetSize().Length() * 0.5; }
-
-		class Register
-		{
-		public:
-			Register()
-			{
-
-			}
-		};
+		virtual float GetRadius() { return m_texture->GetSize().Length() * 0.5f; }
 
 	public:
+		std::string textureName;
 		res_t<Texture> m_texture;
 	};
 }

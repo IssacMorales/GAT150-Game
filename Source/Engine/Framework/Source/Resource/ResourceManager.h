@@ -5,7 +5,7 @@
 #include <memory>
 #include <string>
 
-#define GET_RESOURCE(type, filename, ...) kiko::ResourceManager::Instance().Get<type>(filename, VA_ARGS)
+#define GET_RESOURCE(type, filename, ...) kiko::ResourceManager::Instance().Get<type>(filename, __VA_ARGS__)
 
 namespace kiko
 {
@@ -31,6 +31,5 @@ namespace kiko
 
 		return resource;
 	}
-	extern ResourceManager g_resourceM;
 }
 

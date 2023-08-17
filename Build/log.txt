@@ -1,0 +1,6 @@
+INFO: Factory.h(54)
+Class registered: SpriteRenderComponent
+INFO: Factory.h(54)
+Class registered: CircleCollisionComponent
+INFO: Main.cpp(78)
+Initialize Engine...
