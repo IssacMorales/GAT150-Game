@@ -8,6 +8,7 @@ bool Enemy::Initialize()
 {
 	Actor::Initialize();
 
+	m_physicsComponent = GetComponent<PhysicsComponent>();
 	//cache off
 	auto collisionComponent = GetComponent<kiko::CollisionComponent>();
 	if (collisionComponent)
@@ -16,7 +17,6 @@ bool Enemy::Initialize()
 		if (renderComponent)
 		{
 			float scale = transform.scale;
-			//errorHere
 			collisionComponent->m_radius = GetComponent<kiko::RenderComponent>()->GetRadius() * scale;
 		}
 
@@ -36,13 +36,15 @@ void Enemy::Update(float dt)
 		kiko::vec2 direction = player->transform.position - transform.position;
 		// turn towards player		
 		float turnAngle = kiko::vec2::SignedAngle(forward, direction.Normalized());
-		transform.rotation += turnAngle * dt;
+		//transform.rotation += turnAngle * dt;
+		m_physicsComponent->ApplyTorque(turnAngle);
+		 
 		// check if player is in front
 		if (std::fabs(turnAngle) < kiko::DegreesToRadians(30.0f))
 		{
 			// I see you!
 		}
-
+		m_physicsComponent->ApplyForce(forward * speed);
 	}
 
 	transform.position += forward * m_speed * kiko::g_time.GetDeltaTime();
@@ -56,7 +58,8 @@ void Enemy::OnCollision(Actor* other)
 {
 	if (other->tag == "Player")
 	{
-		m_game->AddPoints(100);
+		kiko::EventManager::Instance().DispatchEvent("AddPoints", 100);
+		//m_game->AddPoints(100);
 		destroyed = true;
 
 		// create explosion
@@ -74,7 +77,7 @@ void Enemy::OnCollision(Actor* other)
 
 		data.color = kiko::Color{ 1, 1, 1, 1 };
 
-		kiko::Transform transform{ transform.position, 0, 1};
+		kiko::Transform transform{ this->transform.position, 0, 1};
 		auto emitter = std::make_unique<kiko::Emitter>(transform, data);
 		emitter->lifespan = 0.1f;
 		m_scene->Add(std::move(emitter));

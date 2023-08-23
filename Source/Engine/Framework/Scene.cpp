@@ -17,12 +17,12 @@ namespace kiko
 		auto iter = m_actors.begin();
 		while (iter != m_actors.end())
 		{
-			(*iter)->Update(dt);
+			if ((*iter)->active) (*iter)->Update(dt);
 			((*iter)->destroyed) ? iter = m_actors.erase(iter) : iter++;
 		}
 
 		// check collisions
-		for (auto iter1 = m_actors.begin(); iter1 != m_actors.end(); iter1++)
+		/*for (auto iter1 = m_actors.begin(); iter1 != m_actors.end(); iter1++)
 		{
 			for (auto iter2 = std::next(iter1, 1); iter2 != m_actors.end(); iter2++)
 			{
@@ -37,12 +37,15 @@ namespace kiko
 					(*iter2)->OnCollision(iter1->get());
 				}
 			}
-		}
+		}*/
 	}
 
 	void Scene::Draw(Renderer& renderer)
 	{
-		for (auto& actor : m_actors) actor->Draw(renderer);
+		for (auto& actor : m_actors) 
+		{
+			if(actor->active) actor->Draw(renderer);
+		}
 	}
 
 	void Scene::Add(std::unique_ptr<Actor> actor)
@@ -51,9 +54,13 @@ namespace kiko
 		m_actors.push_back(std::move(actor));
 	}
 
-	void Scene::RemoveAll()
+	void Scene::RemoveAll(bool force)
 	{
-		m_actors.clear();
+		auto iter = m_actors.begin();
+		while (iter != m_actors.end())
+		{
+			(force || !(*iter)->persistent) ? iter = m_actors.erase(iter) : iter++;
+		}
 	}
 
 	bool Scene::Load(const std::string& filename)
@@ -80,7 +87,16 @@ namespace kiko
 
 				auto actor = CREATE_CLASS_BASE(Actor, type);
 				actor->Read(actorValue);
-				Add(std::move(actor));
+
+				if (actor->prototype)
+				{
+					std::string name = actor->name;
+					Factory::Instance().RegisterPrototype(name, std::move(actor));
+				}
+				else
+				{
+					Add(std::move(actor));
+				}
 
 			}
 		}

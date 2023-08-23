@@ -52,24 +52,28 @@ namespace kiko
 		return result;
 	}
 
-	inline Matrix33 Matrix33::operator*(const Matrix33& mx)
-	{
-		Matrix33 result;
-		result[0][0] = rows[0][0] * mx[0][0] + rows[0][1] * mx[1][0] + rows[0][2] + mx[2][0];
-		result[0][1] = rows[0][0] * mx[0][1] + rows[0][1] * mx[1][1] + rows[0][2] + mx[2][1];
-		result[0][2] = rows[0][0] * mx[0][0] + rows[0][1] * mx[1][2] + rows[0][2] + mx[2][2];
+	//thx Maple
+	inline Matrix33 Matrix33::operator*(const Matrix33& mx) {    
+		// | 00 01 02 |   | 00 01 02 |    // | 10 11 12 | * | 10 11 12 |    // | 20 21 22 |   | 20 21 22 | 
 
+		Matrix33 result;    
+		result[0][0] = rows[0][0] * mx[0][0] + rows[0][1] * mx[1][0] + rows[0][2] * mx[2][0];   
+		result[0][1] = rows[0][0] * mx[0][1] + rows[0][1] * mx[1][1] + rows[0][2] * mx[2][1];    
+		result[0][2] = rows[0][0] * mx[0][2] + rows[0][1] * mx[1][2] + rows[0][2] * mx[2][2];
 
-		result[1][0] = rows[1][0] * mx[0][0] + rows[1][1] * mx[1][0] + rows[1][2] + mx[2][0];
-		result[1][1] = rows[1][0] * mx[0][1] + rows[1][1] * mx[1][1] + rows[1][2] + mx[2][1];
-		result[1][2] = rows[1][0] * mx[0][0] + rows[1][1] * mx[1][2] + rows[1][2] + mx[2][2];
+		result[1][0] = rows[1][0] * mx[0][0] + rows[1][1] * mx[1][0] + rows[1][2] * mx[2][0];  		
+		result[1][1] = rows[1][0] * mx[0][1] + rows[1][1] * mx[1][1] + rows[1][2] * mx[2][1];    
+		result[1][2] = rows[1][0] * mx[0][2] + rows[1][1] * mx[1][2] + rows[1][2] * mx[2][2];
 
-		result[2][0] = rows[2][0] * mx[0][0] + rows[2][1] * mx[2][0] + rows[2][2] + mx[2][0];
-		result[2][1] = rows[2][0] * mx[0][1] + rows[2][1] * mx[2][1] + rows[2][2] + mx[2][1];
-		result[2][2] = rows[2][0] * mx[0][0] + rows[2][1] * mx[2][2] + rows[2][2] + mx[2][2];
+		result[2][0] = rows[2][0] * mx[0][0] + rows[2][1] * mx[1][0] + rows[2][2] * mx[2][0];   
+		result[2][1] = rows[2][0] * mx[0][1] + rows[2][1] * mx[1][1] + rows[2][2] * mx[2][1];    
+		result[2][2] = rows[2][0] * mx[0][2] + rows[2][1] * mx[1][2] + rows[2][2] * mx[2][2];
 
 		return result;
+
 	}
+
+
 
 	inline Matrix33 Matrix33::CreateTranslation(const vec2& translate)
 	{
@@ -81,7 +85,7 @@ namespace kiko
 		mx[0][2] = translate.x;
 		mx[1][2] = translate.y;
 
-		return Matrix33();
+		return mx;
 	}
 
 	inline Matrix33 Matrix33::CreateIdentity()
@@ -114,7 +118,7 @@ namespace kiko
 		// | 0 0 1 |
 		Matrix33 mx = CreateIdentity();
 		mx[0][0] = scale;
-		mx[0][0] = scale;
+		mx[1][1] = scale;
 
 		return mx;
 		

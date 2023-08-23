@@ -31,6 +31,13 @@ bool SpaceGame::Initialize()
 	m_scene->Load("scene.json");
 	m_scene->Initialize();
 
+	//add events
+	EVENT_SUBSCRIBE("AddPoints", SpaceGame::AddPoints);
+	EVENT_SUBSCRIBE("OnPlayerDead", SpaceGame::AddPoints);
+
+	kiko::EventManager::Instance().Subscribe("AddPoints", this, std::bind(&SpaceGame::AddPoints, this, std::placeholders::_1));
+	kiko::EventManager::Instance().Subscribe("OnPlayerDead", this, std::bind(&SpaceGame::OnPlayerDead, this, std::placeholders::_1));
+
 	return true;
 }
 
@@ -46,6 +53,8 @@ void SpaceGame::Update(float dt)
 		if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_SPACE))
 		{
 			m_state = eState::StartGame;
+			/*auto actor = m_scene->GetActorByName("Space"); 
+			if(actor) actor->active = false;*/
 		}
 		break;
 
@@ -59,7 +68,7 @@ void SpaceGame::Update(float dt)
 		m_scene->RemoveAll();
 		{
 			//create player
-			std::unique_ptr<Player> player = std::make_unique<Player>(20.0f, kiko::Pi, kiko::Transform{ { 400, 300 }, 0, 6 });
+			std::unique_ptr<Player> player = std::make_unique<Player>(20.0f, kiko::Pi, kiko::Transform{ { 400, 300 }, 0, 0.5 });
 			player->tag = "Player";
 			player->m_game = this;
 
@@ -87,7 +96,7 @@ void SpaceGame::Update(float dt)
 		if (m_spawnTimer >= m_spawnTime)
 		{
 			m_spawnTimer = 0;
-			std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(kiko::randomf(75.0f, 150.0f), kiko::Pi, kiko::Transform{ { kiko::random(800), kiko::random(600) }, kiko::randomf(kiko::TwoPi), 3});
+			std::unique_ptr<Enemy> enemy = std::make_unique<Enemy>(kiko::randomf(75.0f, 150.0f), kiko::Pi, kiko::Transform{ { kiko::random(800), kiko::random(600) }, kiko::randomf(kiko::TwoPi), 0.5f});
 			enemy->tag = "Enemy";
 			enemy->m_game = this;
 
@@ -121,7 +130,7 @@ void SpaceGame::Update(float dt)
 		m_stateTimer -= dt;
 		if (m_stateTimer <= 0)
 		{
-			m_scene->RemoveAll();
+			m_scene->RemoveAll(true);
 			m_state = eState::Title;
 		}
 		break;
@@ -148,4 +157,16 @@ void SpaceGame::Draw(kiko::Renderer & renderer)
 	m_timerText->Draw(renderer, 400, 40);
 	m_scoreText->Draw(renderer, 40, 20);
 	m_scene->Draw(renderer);
+}
+
+void SpaceGame::AddPoints(const kiko::Event& event)
+{
+	m_score += std::get<int>(event.data);
+
+}
+
+void SpaceGame::OnPlayerDead(const kiko::Event& event)
+{
+	m_lives--;
+	m_state = eState::PlayerDeadStart;
 }

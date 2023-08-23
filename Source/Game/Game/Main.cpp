@@ -13,6 +13,7 @@
 #include "Renderer/Renderer.h"
 #include "Renderer/Texture.h"
 
+#include <functional>
 #include <iostream>
 #include <vector>
 #include <thread>
@@ -47,31 +48,63 @@ public:
 	kiko::vec2 m_vel;
 };
 
-
-
-template<typename T>
-void print(const std::string& s, const T& container) {
-	std::cout << s << std::endl; for(auto element : container)
-	{
-		std::cout << element << "";
-	}
-	std::cout << std::endl;
-}
-
-void print_arg(int count, ...)
+void print(int i)
 {
-	va_list args;
-
-	va_start(args, count);
-	for (int i = 0; i < count; ++i)
-	{
-		std::cout << va_arg(args, const char*) << std::endl;
-	}
-	va_end(args);
+	cout << i << endl;
 }
+
+int add(int i1, int i2)
+{
+	return i1 + 12;
+}
+
+int sub(int i1, int i2)
+{
+	return i1 - 12;
+}
+
+class A
+{
+public:
+	int add(int i1, int i2)
+	{
+		return i1 + 12;
+	}
+};
+
+union Data
+{
+	int i;
+	bool b;
+	char c[6];
+
+};
 
 int main(int argc, char* argv[])
 {
+	Data data;
+	data.i = 0;
+	cout << data.i << endl;
+
+
+	void (*func_ptr)(int) = &print;
+	func_ptr(5);
+
+	int (*op_ptr)(int, int);
+	op_ptr = add;
+
+	cout << op_ptr(4, 4) << endl;
+
+	std::function<int(int, int)> op;
+	op = add;
+	cout << op(5, 6) << endl;
+
+	A a;
+	op = std::bind(&A::add, a, std::placeholders::_1, std::placeholders::_2);
+	cout << op(6, 6) << endl;
+
+
+
 	kiko::Factory::Instance().Register<kiko::SpriteRenderComponent>("SpriteRenderComponent");
 	kiko::Factory::Instance().Register<kiko::CircleCollisionComponent>("CircleCollisionComponent");
 
@@ -147,6 +180,7 @@ int main(int argc, char* argv[])
 			quit = true;
 		}
 		kiko::g_particleSystem.Update(kiko::g_time.GetDeltaTime());
+		kiko::PhysicsSystem::Instance().Update(kiko::g_time.GetDeltaTime());
 
 		// update game
 		game->Update(kiko::g_time.GetDeltaTime());
@@ -161,8 +195,8 @@ int main(int argc, char* argv[])
 			star.Draw(kiko::g_renderer);
 		}
 		kiko::g_renderer.DrawTexture(texture.get(), 200.0f, 200.0f, 0.0f);
-		game->Draw(kiko::g_renderer);
 		kiko::g_particleSystem.Draw(kiko::g_renderer);
+		game->Draw(kiko::g_renderer);
 		
 		kiko::g_renderer.EndFrame();
 	}

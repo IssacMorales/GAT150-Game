@@ -1,16 +1,28 @@
-INFO: Factory.h(55)
-Class registered: SpriteRenderComponent
-INFO: Factory.h(55)
-Class registered: ModelRenderComponent
-INFO: Factory.h(55)
-Class registered: EnginePhysicsComponent
-INFO: Factory.h(55)
-Class registered: CircleCollisionComponent
-INFO: Factory.h(55)
-Class registered: Actor
-INFO: Factory.h(55)
-Class registered: SpriteRenderComponent
-INFO: Factory.h(55)
-Class registered: CircleCollisionComponent
-INFO: Main.cpp(78)
+INFO: Factory.h(74)
+Prototype Class registered: Weapon
+INFO: Factory.h(74)
+Prototype Class registered: SpriteRenderComponent
+INFO: Factory.h(74)
+Prototype Class registered: ModelRenderComponent
+INFO: Factory.h(74)
+Prototype Class registered: EnginePhysicsComponent
+INFO: Factory.h(74)
+Prototype Class registered: CircleCollisionComponent
+INFO: Factory.h(74)
+Prototype Class registered: Actor
+INFO: Factory.h(74)
+Prototype Class registered: SpriteRenderComponent
+INFO: Factory.h(74)
+Prototype Class registered: CircleCollisionComponent
+INFO: Main.cpp(111)
 Initialize Engine...
+INFO: Factory.h(81)
+Class registered: Rocket
+INFO: EventManager.cpp(16)
+Event subscribed: AddPoints
+INFO: EventManager.cpp(16)
+Event subscribed: OnPlayerDead
+INFO: EventManager.cpp(16)
+Event subscribed: AddPoints
+INFO: EventManager.cpp(16)
+Event subscribed: OnPlayerDead
