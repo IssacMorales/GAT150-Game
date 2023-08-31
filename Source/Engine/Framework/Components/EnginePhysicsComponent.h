@@ -6,7 +6,7 @@ namespace kiko
 	class EnginePhysicsComponent : public PhysicsComponent
 	{
 	public: 
-		CLASS_DELCARATION(EnginePhysicsComponent)
+		CLASS_DECLARATION(EnginePhysicsComponent)
 
 		virtual void Update(float dt);
 		virtual void ApplyForce(const vec2& force);

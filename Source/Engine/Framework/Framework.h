@@ -11,6 +11,9 @@
 #include "Components/PhysicsComponent.h"
 #include "Components/ModelRenderComponent.h"
 #include "Components/EnginePhysicsComponent.h"
+#include "Components/SpriteAnimRenderComponent.h"
+
+#include "Components/TilemapComponent.h"
 #include "Components/CollisionComponent.h"
 #include "Components/CircleCollisionComponent.h"
 #include "Components/Box2DCollisionComponent.h"

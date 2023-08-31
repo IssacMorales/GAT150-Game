@@ -11,7 +11,6 @@
 
 namespace kiko
 {
-    //errorHere
 
     class CreatorBase
     {

@@ -1,9 +1,10 @@
 #pragma once
 #include <memory>
+#include "Scene.h"
 
 namespace kiko
 {
-	class Scene;
+	//class Scene;
 	class Renderer;
 
 	class Game

@@ -7,6 +7,8 @@
 #include "Audio/AudioSystem.h"
 #include "Input/InputSystem.h"
 
+using namespace kiko;
+
 bool SpaceGame::Initialize()
 {
 	// create font / text objects
@@ -28,7 +30,7 @@ bool SpaceGame::Initialize()
 
 	// create scene
 	m_scene = std::make_unique<kiko::Scene>();
-	m_scene->Load("scene.json");
+	m_scene->Load("scenes/SpaceScene.json");
 	m_scene->Initialize();
 
 	//add events
@@ -50,6 +52,7 @@ void SpaceGame::Update(float dt)
 	switch (m_state)
 	{
 	case SpaceGame::eState::Title:
+		m_scene->GetActorByName("Title")->active = true;
 		if (kiko::g_inputSystem.GetKeyDown(SDL_SCANCODE_SPACE))
 		{
 			m_state = eState::StartGame;

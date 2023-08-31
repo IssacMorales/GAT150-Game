@@ -53,6 +53,9 @@ namespace kiko
 		{
 			component->Update(dt);
 		}
+		if (tag == "Coin") {
+			//std::cout << transform.position.x << " " << transform.position.y << std::endl;
+		}
 	}
 
 	void Actor::Draw(kiko::Renderer& renderer)

@@ -26,7 +26,7 @@ namespace kiko
 
 	void Box2DPhysicsComponent::Update(float dt)
 	{
-		Vector2 position = B2VEC2_TO_VEC2(m_body->GetPosition());
+		vec2 position = B2VEC2_TO_VEC2(m_body->GetPosition());
 		m_owner->transform.position = PhysicsSystem::Instance().WorldToScreen(position);
 		m_owner->transform.rotation = m_body->GetAngle();
 		m_velocity = B2VEC2_TO_VEC2(m_body->GetLinearVelocity());
@@ -40,6 +40,16 @@ namespace kiko
 	void Box2DPhysicsComponent::ApplyTorque(float torque)
 	{
 		m_body->ApplyTorque(torque, true);
+	}
+
+	void Box2DPhysicsComponent::SetVelocity(const vec2& velocity)
+	{
+		m_body->SetLinearVelocity(VEC2_TO_B2VEC2(velocity));
+	}
+
+	void Box2DPhysicsComponent::SetGravityScale(float scale)
+	{
+		m_body->SetGravityScale(scale);
 	}
 
 	void Box2DPhysicsComponent::Read(const json_t& value)

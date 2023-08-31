@@ -6,13 +6,14 @@ namespace kiko
 	class Weapon : public Actor
 	{
 	public:
-		CLASS_DELCARATION(Weapon)
+		CLASS_DECLARATION(Weapon)
 
 		bool Initialize() override;
 		void Update(float dt) override;
-		void OnCollision(Actor* other);
+		void OnCollisionEnter(Actor* other);
 
 	private:
 		float speed = 0;
+		class PhysicsComponent* m_physicsComponent = nullptr;
 	};
 }

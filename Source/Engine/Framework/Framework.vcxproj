@@ -144,7 +144,10 @@
     <ClInclude Include="Components\EnginePhysicsComponent.h" />
     <ClInclude Include="Components\ModelRenderComponent.h" />
     <ClInclude Include="Components\PhysicsComponent.h" />
+    <ClInclude Include="Components\SpriteAnimRenderComponent.h" />
     <ClInclude Include="Components\SpriteRenderComponent.h" />
+    <ClInclude Include="Components\TextRenderComponent.h" />
+    <ClInclude Include="Components\TilemapComponent.h" />
     <ClInclude Include="Emitter.h" />
     <ClInclude Include="Event\Event.h" />
     <ClInclude Include="Event\EventManager.h" />
@@ -163,10 +166,12 @@
     <ClCompile Include="Components\Box2DCollisionComponent.cpp" />
     <ClCompile Include="Components\Box2DPhysicsComponent.cpp" />
     <ClCompile Include="Components\CircleCollisionComponent.cpp" />
-    <ClCompile Include="Components\CollisionComponent.cpp" />
     <ClCompile Include="Components\EnginePhysicsComponent.cpp" />
     <ClCompile Include="Components\ModelRenderComponent.cpp" />
+    <ClCompile Include="Components\SpriteAnimRenderComponent.cpp" />
     <ClCompile Include="Components\SpriteRenderComponent.cpp" />
+    <ClCompile Include="Components\TextRenderComponent.cpp" />
+    <ClCompile Include="Components\TilemapComponent.cpp" />
     <ClCompile Include="Emitter.cpp" />
     <ClCompile Include="Event\EventManager.cpp" />
     <ClCompile Include="Object.cpp" />

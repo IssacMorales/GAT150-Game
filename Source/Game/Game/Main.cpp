@@ -10,7 +10,6 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "SpaceGame.h"
-#include "Renderer/Renderer.h"
 #include "Renderer/Texture.h"
 
 #include <functional>
@@ -20,6 +19,7 @@
 #include <array>
 #include <Framework/Components/SpriteRenderComponent.h>
 #include <Framework/Components/CircleCollisionComponent.h>
+#include <Physics/PhysicsSystem.h>
 
 using namespace std;
 
@@ -48,62 +48,8 @@ public:
 	kiko::vec2 m_vel;
 };
 
-void print(int i)
-{
-	cout << i << endl;
-}
-
-int add(int i1, int i2)
-{
-	return i1 + 12;
-}
-
-int sub(int i1, int i2)
-{
-	return i1 - 12;
-}
-
-class A
-{
-public:
-	int add(int i1, int i2)
-	{
-		return i1 + 12;
-	}
-};
-
-union Data
-{
-	int i;
-	bool b;
-	char c[6];
-
-};
-
 int main(int argc, char* argv[])
 {
-	Data data;
-	data.i = 0;
-	cout << data.i << endl;
-
-
-	void (*func_ptr)(int) = &print;
-	func_ptr(5);
-
-	int (*op_ptr)(int, int);
-	op_ptr = add;
-
-	cout << op_ptr(4, 4) << endl;
-
-	std::function<int(int, int)> op;
-	op = add;
-	cout << op(5, 6) << endl;
-
-	A a;
-	op = std::bind(&A::add, a, std::placeholders::_1, std::placeholders::_2);
-	cout << op(6, 6) << endl;
-
-
 
 	kiko::Factory::Instance().Register<kiko::SpriteRenderComponent>("SpriteRenderComponent");
 	kiko::Factory::Instance().Register<kiko::CircleCollisionComponent>("CircleCollisionComponent");
@@ -148,6 +94,7 @@ int main(int argc, char* argv[])
 
 	kiko::g_inputSystem.Initialize();
 	kiko::g_audioSystem.Initialize();
+	kiko::PhysicsSystem::Instance().Initialize();
 
 	// create game
 	unique_ptr<SpaceGame> game = make_unique<SpaceGame>();
@@ -167,8 +114,6 @@ int main(int argc, char* argv[])
 
 	// main game loop
 	bool quit = false;
-	
-	//texture->Load("Ship_1_C_Medium.png", kiko::g_renderer);
 
 	while (!quit)
 	{

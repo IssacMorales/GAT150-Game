@@ -10,7 +10,7 @@ namespace kiko
 	class ModelRenderComponent : public RenderComponent
 	{
 	public:
-		CLASS_DELCARATION(ModelRenderComponent)
+		CLASS_DECLARATION(ModelRenderComponent)
 
 		bool Initialize();
 		void Update(float dt) override;

@@ -3,7 +3,7 @@
 #include "Core/Json.h"
 #include <string>
 
-#define CLASS_DELCARATION(classname) \
+#define CLASS_DECLARATION(classname) \
 	virtual const char* GetClassName() { return #classname; } \
 	virtual void Read(const json_t& value); \
 	virtual std::unique_ptr<Object> Clone() { return std::make_unique<classname>(*this); } \
@@ -28,7 +28,7 @@ namespace kiko
 		Object(const std::string& name) : name{ name } {}
 		virtual ~Object() { OnDestroy(); }
 
-		CLASS_DELCARATION(Object)
+		CLASS_DECLARATION(Object)
 
 		virtual bool Initialize() { return true; }
 		virtual void OnDestroy() {}
